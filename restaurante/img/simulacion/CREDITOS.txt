@@ -1,0 +1,23 @@
+Fotos de la demostración (index.html)
+==========================================
+Fuente: Pexels (https://www.pexels.com). Se usan según la licencia de Pexels
+(https://www.pexels.com/license/): uso libre, incluso comercial; la atribución
+no es obligatoria, pero se listan los autores igual.
+Se recortaron y comprimieron (640x640; el banner, 1600x640) sin alterar su contenido.
+
+archivo | título | autor | página
+bruschetta-de-tomate.jpg | Photo of Chopped Tomatoes on Top of Toasted Bread | Mateusz Feliksik | https://www.pexels.com/photo/11789787/
+bolinho-de-queijo.jpg | Delicious Crispy Cheese Balls on Wooden Table | Laura oliveira | https://www.pexels.com/photo/34692572/
+salada-caprese.jpg | Vegetable Salad with Herbs on a Plate  | Fabrizio Velez | https://www.pexels.com/photo/15237356/
+espaguete-carbonara.jpg | Plate of Pasta with Egg | Nadin Sh | https://www.pexels.com/photo/20352389/
+lasanha-bolonhesa.jpg | Lasagna on a Plate | 素材王国 Footage Kingdom | https://www.pexels.com/photo/13823542/
+fettuccine-alfredo.jpg | Overhead View of Meal with Cheese | Shameel mukkath | https://www.pexels.com/photo/5639532/
+pizza-margherita.jpg | Buratta Pizza | Gian Larracas | https://www.pexels.com/photo/27793841/
+pizza-calabresa.jpg | Homemade Pizza with Onions and Cheese | Zayed Hossain | https://www.pexels.com/photo/36370808/
+pizza-quatro-queijos.jpg | Close-up of Delicious Four Cheese Pizza on Wooden Table | pedro furtado | https://www.pexels.com/photo/33458021/
+refrigerante-lata.jpg | Two Glasses With Beverage and Straws | AS Photography | https://www.pexels.com/photo/104509/
+suco-natural.jpg | Orange Slices and Juice in Glass | Tymur Khakimov | https://www.pexels.com/photo/6412584/
+agua-mineral.jpg | Spring pure water in transparent glass | PB's Photography | https://www.pexels.com/photo/4056011/
+pudim-caseiro.jpg | Delicious Caramel Flan on Rustic Plate | Ana Vieira | https://www.pexels.com/photo/33614670/
+tiramisu.jpg | Piece of Cake on a Plate  | Arian Fernandez | https://www.pexels.com/photo/26838690/
+banner.jpg | Delicious Pizzas and a Plate of Seafood Marinara | Sarda Bamberg | https://www.pexels.com/photo/14966000/

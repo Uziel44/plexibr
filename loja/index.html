@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<!-- Demostración sin backend, en una carpeta autónoma: se abre con doble clic o se
+     sube entera a cualquier hosting estático. Misma estructura que index.html y los
+     mismos css/style.css y js/*.js, que acá son COPIAS de los de la app (carpeta de
+     arriba): si cambian allá, volver a copiarlos. Lo único que cambia es lo que habla
+     con el servidor, que simula js/simulacion.js (se carga primero). Sin GTM ni
+     métricas. Si cambia el <body> de index.html, repetir el cambio acá. -->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <meta name="theme-color" content="#1f4a38">
+
+  <title>Demonstração | Loja de roupas com pedidos pelo WhatsApp</title>
+  <meta name="description" content="Veja nosso catálogo, monte seu pedido e envie direto pelo WhatsApp.">
+
+  <meta name="robots" content="noindex">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Catálogo online | Peça pelo WhatsApp">
+  <meta property="og:description" content="Veja nosso catálogo, monte seu pedido e envie direto pelo WhatsApp.">
+  <meta property="og:image" content="img/logo.jpg">
+  <meta name="twitter:card" content="summary">
+
+  <link rel="icon" href="img/logo.jpg">
+  <link rel="apple-touch-icon" href="img/logo.jpg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Playfair+Display:wght@600;700&family=Lora:wght@400;500;600&family=Quicksand:wght@500;600;700&family=Nunito:wght@400;600;700&display=swap">
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/admin.css">
+  <link rel="stylesheet" href="css/simulacion-admin.css">
+  <link rel="stylesheet" href="css/simulacion.css">
+</head>
+<body>
+  <a class="skip-link" href="#contenido-principal">Pular para o conteúdo principal</a>
+
+  <header class="barra">
+    <a class="barra-titulo-link" id="link-nombre-negocio" href="#">
+      <img class="barra-logo" id="barra-logo" src="img/logo.jpg" alt="Plexi Pedidos">
+      <span class="barra-titulo" id="barra-titulo">Categorias</span>
+    </a>
+    <div class="barra-acciones">
+      <span class="barra-badge-negocio oculto" id="badge-negocio-logueado"></span>
+      <button class="barra-boton" id="btn-menu" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu-lateral" title="Menu">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+      <button class="carrito-boton" id="btn-carrito" aria-label="Ver meu carrinho">
+        &#128722;
+        <span class="carrito-contador oculto" id="carrito-contador">0</span>
+      </button>
+    </div>
+  </header>
+
+  <div class="menu-fondo oculto" id="menu-fondo"></div>
+  <aside class="menu-lateral" id="menu-lateral" aria-hidden="true" aria-label="Menu">
+    <div class="menu-lateral-cabecera">
+      <span class="menu-lateral-titulo" id="menu-titulo">Menu</span>
+      <button class="menu-lateral-cerrar" id="menu-cerrar" type="button" aria-label="Fechar menu">&#10005;</button>
+    </div>
+
+    <nav class="menu-lateral-lista" id="menu-opciones">
+      <button class="menu-item" id="menu-iniciar-sesion" type="button">
+        <span class="menu-item-icono menu-item-icono-acento" aria-hidden="true">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="10" r="3"/><path d="M6.2 18.4c1.2-2.2 3.2-3.4 5.8-3.4s4.6 1.2 5.8 3.4"/></svg>
+        </span>
+        <span class="menu-item-textos">
+          <span class="menu-item-titulo">Entrar</span>
+          <span class="menu-item-sub">Acesse sua conta</span>
+        </span>
+        <span class="menu-item-flecha" aria-hidden="true">&#8250;</span>
+      </button>
+      <div class="menu-contacto" id="menu-contacto-detalle"></div>
+    </nav>
+  </aside>
+
+  <div class="subbarra oculto" id="subbarra-volver">
+    <button class="subbarra-boton" id="btn-volver">
+      <span aria-hidden="true">&#8592;</span>
+      <span id="subbarra-texto">Categorias</span>
+    </button>
+  </div>
+
+  <main id="contenido-principal">
+
+    <section class="pantalla activa" id="pantalla-categorias">
+      <div class="saludo">
+        <h1 id="nombre-negocio">Seu Negócio</h1>
+      </div>
+                  <div id="lista-categorias"></div>
+
+      <!-- Diseño "restaurante" (solo si el negocio eligió ese tipo de tienda):
+           nav de categorías fijo + todos los productos en una sola pantalla.
+           Lo arma js/app.js (dibujarMenuRestaurante); en los demás tipos de
+           tienda queda oculto y se usa la grilla de categorías de arriba. -->
+      <div class="menu-restaurante oculto" id="menu-restaurante">
+        <nav class="menu-nav" id="menu-nav" aria-label="Categorias do cardápio"></nav>
+        <div class="menu-secciones" id="menu-secciones"></div>
+      </div>
+
+      <div class="tarjeta-promo oculto" id="tarjeta-promo">
+        <span class="tarjeta-promo-etiqueta">Tem um negócio?</span>
+        <p class="tarjeta-promo-titulo">Seu catálogo online</p>
+        <p class="tarjeta-promo-precio">R$ 100 <span>por mês</span></p>
+      </div>
+
+      <button class="boton-simulacion-admin oculto" id="boton-simulacion-admin" type="button" onclick="abrirSimulacion()">Quero ver como ficaria o meu perfil</button>
+
+      <a class="boton-contacto-negocio oculto" id="boton-contacto-negocio" data-wa-real href="https://wa.me/553181114961?text=Tenho%20um%20neg%C3%B3cio%20e%20quero%20saber%20mais" target="_blank" rel="noopener">Tenho um negócio e quero saber mais</a>
+    </section>
+
+    <section class="pantalla" id="pantalla-productos">
+      <div class="contador-productos" id="contador-productos"></div>
+            <div id="lista-productos"></div>
+    </section>
+
+    <section class="pantalla" id="pantalla-detalle">
+      <div id="detalle-contenido"></div>
+    </section>
+
+    <section class="pantalla" id="pantalla-carrito">
+      <div id="carrito-contenido"></div>
+    </section>
+
+    <footer>
+      <p class="footer-credito">Demonstração: nada é enviado de verdade &middot; Plexi catalogo</p>
+    </footer>
+
+  </main>
+
+  <div class="confirmacion" id="confirmacion" role="status" aria-live="polite"></div>
+
+  <button class="carrito-flotante oculto" id="btn-carrito-flotante" aria-label="Ver meu carrinho">
+    &#128722;
+    <span class="carrito-flotante-contador oculto" id="carrito-flotante-contador">0</span>
+  </button>
+
+  <div class="compartir-flotante" id="compartir-flotante">
+    <button class="compartir-boton compartir-whatsapp" id="btn-compartir-whatsapp" aria-label="Compartilhar pelo WhatsApp">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.198.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.148.198 2.096 3.2 5.077 4.487.709.306 1.263.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12.004 2c-5.514 0-9.997 4.483-9.997 9.997 0 1.763.46 3.486 1.334 5.002L2 22l5.117-1.32a9.955 9.955 0 0 0 4.887 1.24h.004c5.514 0 9.997-4.483 9.997-9.997C22 6.483 17.518 2 12.004 2zm0 18.184h-.003a8.19 8.19 0 0 1-4.174-1.14l-.3-.178-3.037.784.81-2.96-.195-.304a8.187 8.187 0 0 1-1.256-4.39c0-4.523 3.68-8.203 8.207-8.203 2.19 0 4.25.854 5.799 2.404a8.15 8.15 0 0 1 2.4 5.803c-.002 4.524-3.682 8.204-8.251 8.184z"/></svg>
+    </button>
+    <button class="compartir-boton compartir-facebook" id="btn-compartir-facebook" aria-label="Compartilhar no Facebook">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.397 20.997v-8.196h2.765l.411-3.209h-3.176V7.548c0-.929.258-1.563 1.587-1.563h1.684V3.127A22.336 22.336 0 0 0 14.201 3c-2.444 0-4.122 1.492-4.122 4.231v2.361H7.332v3.209h2.753v8.196h3.312z"/></svg>
+    </button>
+    <button class="compartir-boton compartir-messenger" id="btn-compartir-messenger" aria-label="Compartilhar pelo Messenger">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.145 2 11.243c0 2.9 1.454 5.489 3.726 7.181V22l3.405-1.87c.909.251 1.871.386 2.869.386 5.523 0 10-4.145 10-9.273S17.523 2 12 2zm1.008 12.49-2.553-2.725-4.98 2.725 5.478-5.816 2.615 2.725 4.917-2.725-5.477 5.816z"/></svg>
+    </button>
+    <button class="compartir-boton compartir-instagram" id="btn-compartir-instagram" aria-label="Copiar link para o Instagram">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2c-2.716 0-3.056.012-4.123.06-1.064.049-1.791.218-2.427.465a4.902 4.902 0 0 0-1.772 1.153A4.902 4.902 0 0 0 2.525 5.45c-.247.636-.416 1.363-.465 2.427C2.012 8.944 2 9.284 2 12s.012 3.056.06 4.123c.049 1.064.218 1.791.465 2.427a4.902 4.902 0 0 0 1.153 1.772 4.902 4.902 0 0 0 1.772 1.153c.636.247 1.363.416 2.427.465C8.944 21.988 9.284 22 12 22s3.056-.012 4.123-.06c1.064-.049 1.791-.218 2.427-.465a4.902 4.902 0 0 0 1.772-1.153 4.902 4.902 0 0 0 1.153-1.772c.247-.636.416-1.363.465-2.427.048-1.067.06-1.407.06-4.123s-.012-3.056-.06-4.123c-.049-1.064-.218-1.791-.465-2.427a4.902 4.902 0 0 0-1.153-1.772A4.902 4.902 0 0 0 18.55 2.525c-.636-.247-1.363-.416-2.427-.465C15.056 2.012 14.716 2 12 2zm0 1.802c2.67 0 2.987.01 4.042.058.976.045 1.505.207 1.858.344.467.182.8.399 1.15.748.35.35.566.683.748 1.15.137.353.3.882.344 1.858.048 1.055.058 1.372.058 4.042s-.01 2.987-.058 4.042c-.045.976-.207 1.505-.344 1.858a3.1 3.1 0 0 1-.748 1.15 3.1 3.1 0 0 1-1.15.748c-.353.137-.882.3-1.858.344-1.054.048-1.371.058-4.042.058s-2.987-.01-4.042-.058c-.976-.045-1.505-.207-1.858-.344a3.1 3.1 0 0 1-1.15-.748 3.1 3.1 0 0 1-.748-1.15c-.137-.353-.3-.882-.344-1.858-.048-1.055-.058-1.372-.058-4.042s.01-2.987.058-4.042c.045-.976.207-1.505.344-1.858.182-.467.399-.8.748-1.15.35-.35.683-.566 1.15-.748.353-.137.882-.3 1.858-.344C9.013 3.812 9.33 3.802 12 3.802zm0 3.063a5.135 5.135 0 1 0 0 10.27 5.135 5.135 0 0 0 0-10.27zm0 8.468a3.333 3.333 0 1 1 0-6.666 3.333 3.333 0 0 1 0 6.666zm5.338-8.671a1.2 1.2 0 1 1-2.4 0 1.2 1.2 0 0 1 2.4 0z"/></svg>
+    </button>
+  </div>
+
+  <script src="js/simulacion.js"></script>
+  <script src="js/tipografias.js"></script>
+  <script src="js/simulacion-admin.js"></script>
+  <script src="js/catalogo.js"></script>
+  <script src="js/carrito.js"></script>
+  <script src="js/whatsapp.js"></script>
+  <script src="js/analytics.js"></script>
+  <script src="js/app.js"></script>
+
+</body>
+</html>
+

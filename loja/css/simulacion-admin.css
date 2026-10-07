@@ -1,0 +1,240 @@
+/* ============================================================
+   SIMULACIÓN DEL PANEL ADMIN (demo, sin persistencia)
+   ------------------------------------------------------------
+   Reutiliza las clases de css/admin.css (.admin-tab*, .admin-fila*,
+   .admin-modal*, .admin-apariencia-*, etc.) para que la simulación se
+   vea idéntica al panel real. Este archivo solo agrega lo que no
+   existe en admin.css: el overlay de pantalla completa, su barra
+   superior, y el marco del mini-preview de Apariencia.
+   ============================================================ */
+
+.boton-simulacion-admin {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  margin-top: 10px;
+  padding: 14px;
+  background: var(--acento);
+  color: var(--blanco);
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 14.5px;
+  border: none;
+  cursor: pointer;
+}
+
+.boton-simulacion-admin:active { opacity: 0.85; }
+
+
+/* ---------- Overlay a pantalla completa ---------- */
+
+.sim-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  background: var(--gris-fondo);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.sim-barra {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: var(--negro);
+  color: var(--blanco);
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.sim-barra-titulo {
+  font-weight: 800;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+
+.sim-barra-aviso {
+  flex: 1;
+  font-size: 12.5px;
+  color: var(--dorado);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sim-btn-cerrar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.12);
+  color: var(--blanco);
+  display: grid;
+  place-items: center;
+  font-size: 14px;
+  flex-shrink: 0;
+  border: none;
+  cursor: pointer;
+}
+
+.sim-main {
+  padding: 16px;
+  max-width: 720px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.sim-apariencia-layout {
+  display: grid;
+  gap: 16px;
+}
+
+@media (min-width: 720px) {
+  .sim-apariencia-layout {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+}
+
+.sim-preview-marco {
+  border: 1px solid var(--borde);
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--blanco);
+  position: sticky;
+  top: 74px;
+}
+
+.sim-preview-etiqueta {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--texto-suave);
+  text-transform: uppercase;
+  padding: 10px 14px 0;
+}
+
+.sim-preview {
+  padding: 14px;
+}
+
+
+/* ---------- Modales de la simulación ---------- */
+/* Se insertan como hijos directos de <body> (fuera de .sim-overlay), así
+   que necesitan un z-index mayor que el del overlay (500) para quedar
+   por encima y recibir los clics — si no, .admin-modal (z-index: 300,
+   heredado de admin.css) queda tapado detrás del overlay. */
+#sim-modal-categoria,
+#sim-modal-producto {
+  z-index: 600;
+}
+
+
+/* ---------- Mini-preview de Apariencia ---------- */
+
+.sim-preview-barra {
+  padding: 10px 14px;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.sim-preview-cuerpo {
+  padding: 14px;
+}
+
+.sim-preview-seccion-titulo {
+  font-size: 13px;
+  font-weight: 700;
+  margin: 10px 0 8px;
+}
+
+.sim-preview-fila-categorias {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.sim-preview-categoria {
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--blanco);
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 4px;
+}
+
+.sim-preview-categoria.sim-forma-circular { border-radius: 50%; }
+.sim-preview-categoria.sim-forma-cuadrada { border-radius: 10px; }
+.sim-preview-categoria.sim-forma-columna {
+  width: 100%;
+  height: 40px;
+  border-radius: 8px;
+  justify-content: flex-start;
+  padding-left: 12px;
+  text-align: left;
+}
+
+.sim-preview-fila-productos {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.sim-preview-producto {
+  width: 90px;
+  border: 1px solid var(--borde);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--blanco);
+  font-size: 11px;
+}
+
+.sim-preview-producto.sim-forma-columna {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px;
+}
+
+.sim-preview-producto-img {
+  width: 100%;
+  height: 60px;
+  background: var(--gris-fondo);
+}
+
+.sim-preview-producto.sim-forma-circular .sim-preview-producto-img { border-radius: 50%; }
+.sim-preview-producto.sim-forma-columna .sim-preview-producto-img { width: 44px; height: 44px; flex-shrink: 0; border-radius: 8px; }
+
+.sim-preview-producto-nombre {
+  padding: 6px 6px 0;
+  font-weight: 600;
+}
+
+.sim-preview-producto-precio {
+  padding: 2px 6px 6px;
+  color: var(--texto-suave);
+}
+
+
+/* ---------- Pestaña Métricas ---------- */
+
+/* Con 4 pestañas el ancho de un celular no alcanza con el relleno de admin.css:
+   solo dentro de la simulación se achican y pueden encogerse. */
+#sim-overlay .admin-tabs { gap: 6px; }
+#sim-overlay .admin-tab {
+  min-width: 0;
+  padding: 11px 4px;
+  font-size: 13px;
+}
+
+/* En el panel real este bloque va dentro de una tarjeta (con su sangrado de 16px);
+   acá va suelto, al ancho de la pestaña. */
+#sim-metricas .metrica-negocio-cuerpo { padding: 0 0 16px; }

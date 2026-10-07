@@ -1,0 +1,144 @@
+/* ============================================================
+   SIMULACIÓN DEL CATÁLOGO (index.html)
+   ------------------------------------------------------------
+   Solo lo propio de la demo. Todo el resto de la página se ve con
+   css/style.css, el mismo que el catálogo real.
+   ============================================================ */
+
+/* El panel de administración no existe en la demo: se oculta el acceso
+   ("Entrar") del menú lateral. */
+#menu-iniciar-sesion { display: none; }
+
+
+/* ------------------------------------------------------------
+   Chat de WhatsApp simulado (lo arma js/simulacion.js)
+   Colores literales a propósito: imita una app de terceros, no
+   la paleta del catálogo.
+   ------------------------------------------------------------ */
+
+body.sim-chat-abierto { overflow: hidden; }
+
+.sim-chat-fondo {
+  position: fixed;
+  top: 0; right: 0; bottom: 0; left: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  background: rgba(18, 39, 29, 0.55);
+}
+
+.sim-chat {
+  width: 100%;
+  max-width: 420px;
+  max-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  background: #ece5dd;
+  border-radius: 18px 18px 0 0;
+  overflow: hidden;
+  box-shadow: 0 -8px 40px rgba(0, 0, 0, 0.35);
+}
+
+.sim-chat-barra {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  background: #075e54;
+  color: #ffffff;
+}
+
+.sim-chat-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  background: #ffffff;
+}
+
+.sim-chat-quien {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.25;
+}
+
+.sim-chat-quien small { font-size: 12px; opacity: 0.8; }
+
+.sim-chat-cerrar {
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font-size: 20px;
+  line-height: 1;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.sim-chat-cuerpo {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 12px;
+}
+
+.sim-chat-burbuja {
+  margin-left: auto;
+  max-width: 94%;
+  padding: 8px 10px 6px;
+  background: #dcf8c6;
+  color: #111b21;
+  border-radius: 10px 10px 2px 10px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.13);
+}
+
+.sim-chat-texto {
+  font-size: 14px;
+  line-height: 1.4;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.sim-chat-hora {
+  margin-top: 2px;
+  text-align: right;
+  font-size: 11px;
+  color: #667781;
+}
+
+.sim-chat-aviso {
+  margin: 0;
+  padding: 10px 16px;
+  background: #ffffff;
+  color: var(--texto-suave);
+  font-size: 12px;
+  text-align: center;
+}
+
+.sim-chat-real {
+  display: block;
+  padding: 14px;
+  background: #ffffff;
+  border-top: 1px solid #e4e4e4;
+  color: #075e54;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+}
+
+.sim-chat-voltar {
+  border: 0;
+  padding: 15px;
+  background: var(--acento);
+  color: var(--blanco);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+@media (min-width: 640px) {
+  .sim-chat-fondo { align-items: center; }
+  .sim-chat { border-radius: 18px; }
+}

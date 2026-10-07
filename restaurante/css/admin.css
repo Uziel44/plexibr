@@ -1,0 +1,1062 @@
+/* ============================================================
+   PANEL DE ADMINISTRACIÓN - ESTILOS
+   ------------------------------------------------------------
+   Reutiliza las variables y clases base de style.css
+   (--acento, .campo, .aviso, .boton-principal, etc.)
+   ============================================================ */
+
+body { background: var(--gris-fondo); }
+
+
+/* ---------- Login ---------- */
+
+.admin-login {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  position: relative;
+}
+
+.admin-btn-volver-login {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background: rgba(0,0,0,0.1);
+  color: var(--texto);
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.admin-btn-volver-login:hover {
+  background: rgba(0,0,0,0.15);
+}
+
+.admin-btn-volver-login:active {
+  transform: scale(0.98);
+}
+
+.admin-login-caja {
+  width: 100%;
+  max-width: 360px;
+  background: var(--blanco);
+  border-radius: 14px;
+  padding: 28px 22px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+}
+
+.admin-login-caja h1 {
+  font-size: 21px;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+
+.admin-login-sub {
+  font-size: 13.5px;
+  color: var(--texto-suave);
+  margin-bottom: 20px;
+}
+
+
+/* ---------- Barra y layout general ---------- */
+
+.admin-barra {
+  justify-content: space-between;
+}
+
+.admin-barra-titulos {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.admin-barra-titulos .barra-titulo {
+  flex: none;
+}
+
+.admin-barra-usuario {
+  font-size: 11.5px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.65);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.admin-sesion-activa {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.85);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* En celular angosto solo se ve el punto verde (el nombre del negocio
+   ya compite por espacio con el botón "Salir"); el texto vuelve desde
+   480px, mismo quiebre que ya usa el resto del panel. */
+.admin-sesion-activa-texto {
+  display: none;
+}
+@media (min-width: 480px) {
+  .admin-sesion-activa-texto {
+    display: inline;
+  }
+}
+
+.admin-sesion-punto {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #4fae6d;
+  flex-shrink: 0;
+}
+
+.admin-btn-salir {
+  color: var(--blanco);
+  font-size: 14px;
+  font-weight: 600;
+  padding: 6px 10px;
+  background: rgba(255,255,255,0.14);
+  border-radius: 8px;
+}
+
+.admin-main {
+  padding-top: calc(var(--alto-barra) + 14px);
+  max-width: var(--ancho-max);
+  margin: 0 auto;
+  padding-left: 14px;
+  padding-right: 14px;
+  padding-bottom: 40px;
+}
+
+
+/* ---------- Tabs ---------- */
+
+.admin-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.admin-tab {
+  flex: 1;
+  padding: 11px;
+  background: var(--blanco);
+  border: 1px solid var(--borde);
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--texto-suave);
+}
+
+.admin-tab.activa {
+  background: var(--negro);
+  color: var(--blanco);
+  border-color: var(--negro);
+}
+
+.admin-tab-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+#contador-categorias, #contador-productos-admin {
+  font-size: 13px;
+  color: var(--texto-suave);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.admin-btn-volver {
+  width: 28px; height: 28px;
+  border-radius: 8px;
+  background: var(--gris-fondo);
+  color: var(--texto);
+  display: grid;
+  place-items: center;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+
+.admin-btn-agregar {
+  background: var(--acento);
+  color: var(--blanco);
+  font-size: 13.5px;
+  font-weight: 700;
+  padding: 9px 14px;
+  border-radius: 9px;
+}
+
+
+/* ---------- Métricas ---------- */
+
+.metrica-negocio {
+  background: var(--blanco);
+  border: 1px solid var(--borde);
+  border-radius: 12px;
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+
+.metrica-negocio-titulo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 14px 16px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+}
+
+.metrica-negocio-titulo::-webkit-details-marker { display: none; }
+
+.metrica-negocio-titulo::after {
+  content: '▾';
+  font-size: 13px;
+  color: var(--texto-suave);
+  transition: transform 0.15s ease;
+  flex-shrink: 0;
+}
+
+.metrica-negocio[open] > .metrica-negocio-titulo::after {
+  transform: rotate(180deg);
+}
+
+.metrica-negocio-cuerpo {
+  padding: 0 16px 16px;
+}
+
+.metrica-fila {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+  background: var(--gris-fondo);
+  border: 1px solid var(--borde);
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 10px;
+}
+
+.metrica-nombre {
+  font-weight: 600;
+  flex: 1 1 auto;
+}
+
+.metrica-numero {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--acento-oscuro);
+}
+
+.metrica-detalle {
+  width: 100%;
+  font-size: 13px;
+  color: var(--texto-suave);
+}
+
+/* Fila "vista_categoria"/"vista_producto": el <details> reemplaza el
+   layout flex de .metrica-fila por block, y el <summary> recrea ese
+   mismo layout (nombre + número) para que se vea igual cerrado. */
+.metrica-populares {
+  display: block;
+  cursor: pointer;
+}
+
+.metrica-populares-resumen {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+  list-style: none;
+  user-select: none;
+}
+
+.metrica-populares-resumen::-webkit-details-marker { display: none; }
+
+.metrica-populares-cuerpo {
+  margin-top: 12px;
+}
+
+.metrica-populares-lista {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.metrica-populares-lista li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--borde);
+  font-size: 13.5px;
+}
+
+.metrica-populares-lista li:last-child {
+  border-bottom: none;
+}
+
+.metrica-populares-lista .metrica-numero {
+  font-size: 14px;
+}
+
+.metrica-diaria-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 18px 0 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--texto-suave);
+}
+
+.metrica-btn-exportar {
+  background: var(--blanco);
+  color: var(--acento-oscuro);
+  border: 1px solid var(--acento-oscuro);
+  font-size: 12.5px;
+  font-weight: 700;
+  padding: 7px 12px;
+  border-radius: 8px;
+}
+
+.metrica-btn-exportar:disabled {
+  color: var(--texto-suave);
+  border-color: var(--borde);
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.metrica-diaria-cargando {
+  font-size: 13px;
+  color: var(--texto-suave);
+}
+
+.metrica-tabla-diaria {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+}
+
+.metrica-tabla-diaria th,
+.metrica-tabla-diaria td {
+  padding: 9px 10px;
+  text-align: right;
+  border-bottom: 1px solid var(--borde);
+}
+
+.metrica-tabla-diaria th:first-child,
+.metrica-tabla-diaria td:first-child {
+  text-align: left;
+}
+
+.metrica-tabla-diaria th {
+  color: var(--texto-suave);
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.metrica-tabla-diaria td {
+  font-weight: 700;
+}
+
+.admin-btn-agregar:active { background: var(--acento-oscuro); }
+
+.admin-btn-agregar:disabled {
+  background: var(--texto-suave);
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+
+/* ---------- Filas de listado ---------- */
+
+.admin-fila {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--blanco);
+  border: 1px solid var(--borde);
+  border-radius: 12px;
+  padding: 11px;
+  margin-bottom: 9px;
+}
+
+.admin-fila-color {
+  width: 40px; height: 40px;
+  border-radius: 9px;
+  flex-shrink: 0;
+  background-size: cover;
+  background-position: center;
+}
+
+.admin-fila-agarre {
+  flex-shrink: 0;
+  width: 18px;
+  text-align: center;
+  color: var(--texto-suave);
+  cursor: grab;
+  font-size: 15px;
+  user-select: none;
+}
+
+.admin-fila[draggable="true"]:active .admin-fila-agarre { cursor: grabbing; }
+
+.admin-fila.arrastrando {
+  opacity: 0.5;
+}
+
+.admin-fila-orden {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.admin-fila-orden .admin-fila-boton {
+  width: 26px; height: 17px;
+  font-size: 9px;
+}
+
+.admin-fila-orden .admin-fila-boton:disabled {
+  opacity: 0.3;
+}
+
+.admin-fila-acceso:hover,
+.admin-fila-acceso:active {
+  background-color: var(--acento);
+  color: var(--blanco);
+}
+
+.admin-fila-datos { flex: 1; min-width: 0; }
+
+.admin-fila-link {
+  font-size: 11.5px;
+  color: var(--acento);
+  margin-top: 3px;
+  overflow-wrap: break-word;
+  word-break: break-all;
+}
+
+.admin-fila-nombre {
+  font-size: 15px;
+  font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.admin-fila-sub {
+  font-size: 12.5px;
+  color: var(--texto-suave);
+  margin-top: 2px;
+}
+
+.admin-fila-acciones {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.admin-fila-boton {
+  width: 34px; height: 34px;
+  border-radius: 8px;
+  background: var(--gris-fondo);
+  display: grid;
+  place-items: center;
+  font-size: 15px;
+}
+
+.admin-fila-boton.borrar { color: var(--rojo); }
+
+/* Botón de métricas cuando el panel está activado para ese negocio. */
+.admin-fila-boton-activo {
+  background: var(--acento);
+  color: var(--blanco);
+}
+
+.admin-etiqueta-chica {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+.admin-etiqueta-chica.oferta { background: var(--rojo); color: var(--blanco); }
+.admin-etiqueta-chica.agotado { background: var(--texto-suave); color: var(--blanco); }
+
+
+/* ---------- Modales ---------- */
+
+.admin-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 300;
+}
+
+@media (min-width: 480px) {
+  .admin-modal { align-items: center; }
+}
+
+.admin-modal-caja {
+  width: 100%;
+  max-width: 420px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: var(--blanco);
+  border-radius: 16px 16px 0 0;
+  padding: 22px;
+}
+
+@media (min-width: 480px) {
+  .admin-modal-caja { border-radius: 16px; }
+}
+
+.admin-modal-caja h2 {
+  font-size: 18px;
+  font-weight: 800;
+  margin-bottom: 16px;
+}
+
+.admin-modal-acciones {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.admin-checkbox-terminos {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--texto-suave);
+  line-height: 1.4;
+  margin: 10px 0 4px;
+  cursor: pointer;
+}
+
+.admin-checkbox-terminos input {
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.admin-checkbox-terminos a {
+  color: var(--acento-oscuro);
+  font-weight: 600;
+}
+
+.admin-modal-acciones .boton-secundario {
+  flex: 1;
+  text-align: center;
+  background: var(--gris-fondo);
+  color: var(--texto);
+}
+
+.admin-modal-acciones .boton-principal {
+  flex: 1;
+}
+
+.admin-input-color {
+  width: 60px;
+  height: 42px;
+  padding: 4px;
+  border: 1px solid var(--borde);
+  border-radius: 9px;
+}
+
+.admin-imagen-preview-caja {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.admin-imagen-preview-caja img {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 9px;
+  border: 1px solid var(--borde);
+}
+
+.admin-btn-quitar-imagen {
+  border: none;
+  background: none;
+  color: var(--rojo);
+  font-size: 13px;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+}
+
+.admin-check-fila {
+  display: flex;
+  gap: 18px;
+  margin-bottom: 14px;
+  font-size: 14px;
+}
+
+.admin-check-fila label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+select {
+  width: 100%;
+  padding: 11px 12px;
+  border: 1px solid var(--borde);
+  border-radius: 9px;
+  font-size: 15px;
+  color: var(--texto);
+  background: var(--blanco);
+}
+
+.admin-vacio {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--texto-suave);
+  font-size: 14px;
+}
+
+/* Tarjetas de categoría (tab Productos) — rectangulares, solo texto */
+.admin-tarjeta-categoria {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: var(--blanco);
+  border: 1px solid var(--borde);
+  border-radius: 12px;
+  padding: 14px;
+  margin-bottom: 9px;
+}
+
+.admin-tarjeta-categoria:active {
+  background: var(--gris-fondo);
+}
+
+.admin-tarjeta-categoria-nombre {
+  display: block;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.admin-tarjeta-categoria-sub {
+  display: block;
+  font-size: 12.5px;
+  color: var(--texto-suave);
+  margin-top: 2px;
+}
+
+
+/* ============================================================
+   TAB APARIENCIA
+   ============================================================ */
+
+.admin-apariencia-bloque {
+  background: var(--blanco);
+  border: 1px solid var(--borde);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 14px;
+}
+
+.admin-apariencia-titulo {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.admin-apariencia-ayuda {
+  font-size: 13px;
+  color: var(--texto-suave);
+  margin-bottom: 12px;
+}
+
+.admin-apariencia-fondo-preview {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 9px;
+  overflow: hidden;
+  margin-bottom: 10px;
+  background: var(--gris-fondo);
+}
+
+.admin-apariencia-fondo-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.admin-apariencia-fondo-quitar {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.55);
+  color: var(--blanco);
+  font-size: 14px;
+  display: grid;
+  place-items: center;
+}
+
+/* Interruptor "Sin atenuar" de cada imagen de fondo (mobile/escritorio,
+   ver .admin-apariencia-fondo-preview arriba). El checkbox real queda
+   oculto pero accesible; .admin-apariencia-switch-control es la píldora
+   que se ve, con la bolita movida a la derecha cuando está tildado. */
+.admin-apariencia-switch {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--texto-suave);
+  cursor: pointer;
+}
+
+.admin-apariencia-switch input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+
+.admin-apariencia-switch-control {
+  flex-shrink: 0;
+  width: 38px;
+  height: 22px;
+  border-radius: 999px;
+  background: var(--borde);
+  position: relative;
+  transition: background 0.15s ease;
+}
+
+.admin-apariencia-switch-control::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--blanco);
+  transition: transform 0.15s ease;
+}
+
+.admin-apariencia-switch input:checked + .admin-apariencia-switch-control {
+  background: var(--acento);
+}
+
+.admin-apariencia-switch input:checked + .admin-apariencia-switch-control::before {
+  transform: translateX(16px);
+}
+
+.admin-apariencia-switch input:focus-visible + .admin-apariencia-switch-control {
+  outline: 2px solid var(--acento);
+  outline-offset: 2px;
+}
+
+.admin-apariencia-color-fila {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.admin-apariencia-color-fila:last-child { margin-bottom: 0; }
+
+.admin-apariencia-color-fila label {
+  flex: 1;
+  font-size: 13.5px;
+  font-weight: 600;
+}
+
+.admin-apariencia-color-fila input[type="color"] {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.admin-apariencia-color-quitar {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--texto-suave);
+  text-decoration: underline;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.admin-apariencia-opciones {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.admin-apariencia-opcion {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 6px;
+  border: 2px solid var(--borde);
+  border-radius: 10px;
+  font-size: 12.5px;
+  font-weight: 600;
+  text-align: center;
+  cursor: pointer;
+}
+
+.admin-apariencia-opcion input {
+  /* El radio nativo se mantiene en el DOM (accesible por teclado y
+     lector de pantalla), pero se oculta visualmente: la tarjeta
+     entera hace de control, resaltada con :has() cuando está marcado. */
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+
+.admin-apariencia-opcion:has(input:checked) {
+  border-color: var(--acento);
+  background: #eaf1ec;
+}
+
+.admin-apariencia-opcion:has(input:focus-visible) {
+  outline: 2px solid var(--acento);
+  outline-offset: 2px;
+}
+
+.admin-apariencia-muestra {
+  font-size: 22px;
+  line-height: 1;
+}
+
+/* Fila del selector de tipografía: el <select> con los 10 nombres +
+   un "Aa" al lado que admin.js redibuja con la font-family real de la
+   opción elegida (ver actualizarMuestraTipografia en admin.js), a modo
+   de preview antes de guardar. */
+.admin-apariencia-tipografia-fila {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.admin-apariencia-tipografia-fila select {
+  flex: 1;
+  padding: 10px 12px;
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: inherit;
+  background: var(--blanco);
+  color: var(--texto);
+}
+
+.admin-apariencia-tipografia-fila .admin-apariencia-muestra {
+  flex-shrink: 0;
+  width: 44px;
+  text-align: center;
+}
+
+.admin-apariencia-forma-preview {
+  width: 34px;
+  height: 34px;
+  background: var(--acento);
+}
+
+.admin-apariencia-forma-preview.forma-circular { border-radius: 50%; }
+.admin-apariencia-forma-preview.forma-cuadrada { border-radius: 6px; }
+.admin-apariencia-forma-preview.forma-columna {
+  width: 100%;
+  height: 18px;
+  border-radius: 4px;
+}
+
+.admin-apariencia-error {
+  color: var(--rojo);
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+
+
+/* ---------- Link "Crear usuario nuevo" (pantalla de login) ---------- */
+
+.admin-link-registro {
+  display: block;
+  width: 100%;
+  text-align: center;
+  margin-top: 12px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--acento);
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* ---------- Checklist de contraseña en vivo (modal de registro) ---------- */
+
+.admin-checklist-password {
+  list-style: none;
+  padding: 0;
+  margin: 4px 0 14px;
+  font-size: 12.5px;
+  color: var(--texto-suave);
+}
+
+.admin-checklist-password li {
+  padding-left: 18px;
+  position: relative;
+  margin-bottom: 3px;
+}
+
+.admin-checklist-password li::before {
+  content: '✗';
+  position: absolute;
+  left: 0;
+  color: var(--rojo);
+}
+
+.admin-checklist-password li.cumplido::before {
+  content: '✓';
+  color: var(--acento);
+}
+
+.admin-checklist-password li.cumplido {
+  color: var(--texto);
+}
+
+
+/* ---------- Guía de tamaño del banner (Configuración → Banner) ----------
+   Medida recomendada + esquema de la imagen. El rectángulo punteado es la
+   "zona segura" (la mitad central, en ancho y alto) que siempre se ve en
+   cualquier pantalla; la píldora oscura marca dónde se escribe el nombre
+   del negocio. Proporción 8:3 = 1920 x 720. */
+.admin-banner-guia {
+  background: var(--gris-fondo);
+  border-radius: 9px;
+  padding: 12px;
+  margin-bottom: 12px;
+}
+
+.admin-banner-guia-medida {
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.admin-banner-guia-texto {
+  font-size: 13.5px;
+  margin: 4px 0 12px;
+}
+
+.admin-banner-guia-nota {
+  font-size: 12px;
+  color: var(--texto-suave);
+  margin: 10px 0 0;
+}
+
+.admin-banner-esquema {
+  position: relative;
+  width: 100%;
+  max-width: 360px;
+  aspect-ratio: 8 / 3;
+  background: var(--blanco);
+  border: 1.5px solid var(--borde);
+  border-radius: 8px;
+}
+
+.admin-banner-esquema-medida {
+  position: absolute;
+  left: 8px;
+  top: 6px;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--texto-suave);
+}
+
+.admin-banner-esquema-segura {
+  position: absolute;
+  left: 25%;
+  top: 25%;
+  width: 50%;
+  height: 50%;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  border: 2px dashed var(--acento);
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--acento);
+}
+
+.admin-banner-esquema-nombre {
+  position: absolute;
+  left: 3%;
+  bottom: 8%;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.65);
+  color: var(--blanco);
+  font-size: 10px;
+  font-weight: 700;
+}
+
+/* La vista previa del banner subido tiene la proporción de un celular
+   (390 x 200) y recorta igual que el catálogo (object-fit: cover, centrada):
+   así cada persona ve enseguida cómo le queda su imagen en el celular. */
+#bloque-imagen-fondo-mobile .admin-apariencia-fondo-preview {
+  aspect-ratio: 39 / 20;
+}
+
+#apariencia-fondo-preview-caja::after {
+  content: "Assim aparece no celular";
+  position: absolute;
+  left: 8px;
+  bottom: 8px;
+  padding: 2px 10px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.6);
+  color: var(--blanco);
+  font-size: 11px;
+  font-weight: 700;
+}

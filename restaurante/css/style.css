@@ -1,0 +1,1544 @@
+/* ============================================================
+   CATÁLOGO WEB - ESTILOS
+   ------------------------------------------------------------
+   Mobile-first: todo lo de arriba de este archivo es el diseño
+   para celular. Desde 900px de ancho (ver el @media al final del
+   archivo) el catálogo se ensancha y las categorías/productos
+   pasan de grid de 2 a grid de 4 columnas, para aprovechar el
+   espacio de una pantalla de escritorio en vez de quedar en una
+   columna angosta con márgenes vacíos a los costados.
+   ============================================================ */
+
+:root {
+  --negro:        #12271d;   /* antes #0f0f0f — ahora un negro con base verde, coherente con el acento */
+  --gris-fondo:   #f5f2ec;   /* antes #f5f6f8 (gris frío) — fondo crema cálido */
+  --blanco:       #ffffff;
+  --texto:        #12271d;
+  --texto-suave:  #6b6558;
+  --borde:        #e4d9bd;
+
+  --acento:       #1f4a38;   /* antes #16a34a (verde flúor) — verde botella profundo */
+  --acento-oscuro:#153327;
+  --dorado:       #d4a24c;   /* nuevo: acento secundario, precios y detalles */
+  --whatsapp:     #4fae6d;   /* antes #25d366 (verde flúor de marca) — atenuado a tono cálido */
+  --rojo:         #dc2626;
+  --amarillo:     #f59e0b;
+
+  --alto-barra:    56px;
+  --alto-subbarra: 40px;
+  --ancho-max:     620px;
+
+  /* --barra-fondo y --barra-texto (color de la barra superior,
+     configurable por negocio) NO se declaran acá a propósito: las
+     define app.js vía setProperty solo si el negocio las configuró en
+     el panel admin (pestaña Apariencia → "Colores de la barra"). Si no
+     las declara, .barra usa el fallback var(--acento)/var(--blanco) de
+     siempre — ver el selector .barra más abajo. */
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  background: var(--gris-fondo);
+  color: var(--texto);
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ============================================================
+   PERSONALIZACIÓN POR NEGOCIO (panel admin, pestaña "Apariencia")
+   ------------------------------------------------------------
+   Tipografía: en vez de una clase CSS por cada una de las 10 opciones
+   (ver js/tipografias.js para la lista completa), se usan 2 variables
+   que app.js sobreescribe con setProperty según lo que eligió el
+   negocio: --fuente-titulo (títulos/nombres destacados) y
+   --fuente-cuerpo (texto general de main). Si el negocio no eligió
+   ninguna, las variables no se declaran y todo cae al valor fijo de
+   abajo (IBM Plex Sans) — el catálogo se ve igual que si esto no
+   existiera. Agregar una tipografía nueva a la lista de 10 no requiere
+   tocar este CSS en absoluto.
+   ============================================================ */
+
+h1, h2, .barra-titulo, .detalle-nombre, .tarjeta-promo-titulo {
+  font-family: var(--fuente-titulo, "IBM Plex Sans"), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+main {
+  font-family: var(--fuente-cuerpo, "IBM Plex Sans"), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+/* Imagen de fondo opcional detrás de categorías y productos.
+   Hay dos imágenes configurables por separado desde el panel admin:
+   --imagen-fondo-personalizada (mobile, la de acá abajo por defecto) y
+   --imagen-fondo-desktop-personalizada (desde 900px, ver @media al
+   final del archivo, que la reemplaza ahí). Si el negocio cargó las
+   dos, cada una se ve en su rango de ancho (responsive real). Si solo
+   cargó una de las dos, app.js hace que esa misma se use también en el
+   otro rango — nunca queda un ancho de pantalla sin fondo por haber
+   configurado un solo campo.
+
+   Cada imagen tiene además su propio interruptor "Sin atenuar" en el
+   panel admin: --opacidad-fondo-personalizada / -desktop-personalizada
+   valen 0.5 (imagen atenuada, look de marca de agua detrás del
+   contenido — el comportamiento de siempre) o 1 (imagen nítida a pleno)
+   según lo que haya elegido el negocio para ESA imagen puntual.
+
+   Va en un ::before del <body>, con position: fixed — así la imagen
+   queda clavada en su lugar respecto a la pantalla, sin moverse nunca
+   con el scroll; lo único que se desplaza al scrollear es el contenido
+   real (categorías/productos, dentro de <main>), que pasa por encima
+   suyo. No va en <main> ni usa position: absolute (versión anterior)
+   porque eso la anclaba al tamaño de main, que crece con el scroll —
+   la imagen se movía junto con el contenido en vez de quedar fija.
+
+   No va como background-image directo del body, porque
+   background-image no tiene una propiedad de opacidad propia: bajarle
+   la opacidad al body entero taparía también el contenido de encima.
+
+   El overlay que hace legible el contenido sobre la imagen es
+   simplemente el background normal de main (más abajo, en
+   main.con-fondo-personalizado) — main sí se mueve con el scroll, así
+   que a medida que el usuario scrollea, el overlay (que crece con el
+   contenido real) va tapando cada vez más de la imagen fija de atrás,
+   sin dejar ninguna franja sin atenuar. */
+body.con-fondo-personalizado::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: var(--imagen-fondo-personalizada);
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+  /* --opacidad-fondo-personalizada: 0.5 por defecto (imagen atenuada,
+     como siempre), o 1 (nítida) si el negocio activó "Sin atenuar" para
+     este campo en el panel Apariencia — ver app.js. Es una variable
+     propia de la imagen mobile; la de escritorio la pisa el @media de
+     abajo, mismo mecanismo que --imagen-fondo-desktop-personalizada. */
+  opacity: var(--opacidad-fondo-personalizada, 0.5);
+  z-index: 0;
+  pointer-events: none;
+}
+main.con-fondo-personalizado {
+  position: relative;
+  background: rgba(245, 242, 236, 0.6);
+}
+
+img { display: block; max-width: 100%; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; }
+input, textarea { font-family: inherit; }
+
+:focus-visible {
+  outline: 2px solid var(--acento);
+  outline-offset: 2px;
+}
+
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 12px;
+  background: var(--blanco);
+  color: var(--texto);
+  padding: 10px 16px;
+  border-radius: 6px;
+  z-index: 1000;
+  transition: top 0.15s ease;
+}
+
+.skip-link:focus {
+  top: 12px;
+}
+
+
+/* ============================================================
+   BARRA SUPERIOR (fija en todas las pantallas)
+   ============================================================ */
+
+.barra {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--alto-barra);
+  /* --barra-fondo/--barra-texto: variables dedicadas SOLO a este
+     elemento (panel admin, pestaña Apariencia → "Colores de la barra").
+     No se reusan --acento/--blanco (que sí pintan botones, precios y
+     bordes en el resto del catálogo) a propósito: así un negocio puede
+     cambiar el color de su nav sin recolorear nada más. Si el negocio
+     no configuró nada, el fallback deja la barra igual que siempre. */
+  background: var(--barra-fondo, var(--acento));
+  color: var(--barra-texto, var(--blanco));
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 14px 0 0;
+  z-index: 100;
+}
+
+.barra-titulo-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+}
+
+.barra-logo {
+  width: var(--alto-barra);
+  height: var(--alto-barra);
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.barra-titulo {
+  font-size: 18px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  /* En admin.html .barra-titulo ES el <a> (acá, no un <span> hijo de
+     .barra-titulo-link como en el catálogo público), así que necesita
+     su propio reset de estilos de link. */
+  text-decoration: none;
+  color: inherit;
+}
+
+
+/* ---------- Subbarra: volver a la pantalla anterior ---------- */
+
+.subbarra {
+  position: fixed;
+  top: var(--alto-barra);
+  left: 0; right: 0;
+  z-index: 99;
+  min-height: var(--alto-subbarra);
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--blanco);
+  border-bottom: 1px solid var(--borde);
+}
+
+.subbarra-boton {
+  width: 100%;
+  max-width: var(--ancho-max);
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--texto);
+  padding: 0 14px;
+}
+
+.subbarra-boton span:first-child {
+  font-size: 18px;
+  line-height: 1;
+}
+
+
+/* ---------- Contenedor de acciones (admin + carrito) ---------- */
+
+.barra-acciones {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.barra-boton {
+  background: rgba(255,255,255,0.14);
+  border-radius: 999px;
+  width: 40px; height: 40px;
+  display: grid;
+  place-items: center;
+  color: var(--barra-texto, var(--blanco));
+  font-size: 18px;
+  flex-shrink: 0;
+  padding: 6px;
+}
+
+.barra-boton:active { transform: scale(0.94); }
+
+.barra-usuario {
+  width: auto;
+  height: auto;
+  padding: 8px 12px;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* Nombre del negocio, visible solo cuando su dueño está viendo su
+   propio catálogo con sesión de admin activa (ver marcarSiEstaLogueado
+   en app.js). No es un botón: es una etiqueta informativa estática. */
+.barra-badge-negocio {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--barra-texto, var(--blanco));
+  background: rgba(255,255,255,0.14);
+  border-radius: 10px;
+  padding: 8px 10px;
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex-shrink: 1;
+  min-width: 0;
+}
+
+
+/* ---------- Ícono del carrito con contador ---------- */
+
+.carrito-boton {
+  position: relative;
+  background: rgba(255,255,255,0.14);
+  border-radius: 999px;
+  width: 40px; height: 40px;
+  display: grid;
+  place-items: center;
+  color: var(--blanco);
+  font-size: 19px;
+  flex-shrink: 0;
+}
+
+.carrito-boton:active { transform: scale(0.94); }
+
+.carrito-contador {
+  position: absolute;
+  top: -5px; right: -5px;
+  background: var(--acento);
+  color: var(--blanco);
+  font-size: 11px;
+  font-weight: 700;
+  min-width: 19px;
+  height: 19px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  padding: 0 5px;
+  border: 2px solid var(--negro);
+}
+
+.carrito-contador.oculto { display: none; }
+
+
+/* ============================================================
+   CONTENEDOR DE PANTALLAS
+   ============================================================ */
+
+main {
+  padding-top: var(--alto-barra);
+  padding-bottom: 62px; /* deja lugar al footer fijo (ver footer más abajo, ahora de 2 renglones), que ya no ocupa espacio en el flujo normal */
+  max-width: var(--ancho-max);
+  margin: 0 auto;
+  /* min-height necesario: main mide por default solo lo que ocupa su
+     contenido real. Cuando ese contenido es corto (pocas categorías),
+     sin esto main terminaba mucho antes de llegar al footer fijo,
+     dejando un hueco de body "desnudo" (sin imagen de fondo ni overlay,
+     porque ambos son pseudo-elementos de main — ver
+     main.con-fondo-personalizado más abajo) entre el final real del
+     contenido y el footer. 100dvh (no 100vh): dvh excluye las barras
+     de navegador móviles que aparecen/desaparecen con el scroll, así
+     el hueco no reaparece al cargar con la barra de direcciones visible
+     — vh se calcula contra la altura máxima posible del viewport, no la
+     visible en cada momento. */
+  min-height: 100dvh;
+  background: var(--gris-fondo);
+}
+
+main.con-subbarra {
+  padding-top: calc(var(--alto-barra) + var(--alto-subbarra));
+}
+
+.pantalla { display: none; padding: 14px; }
+.pantalla.activa { display: block; }
+
+
+/* ============================================================
+   PANTALLA 1 - CATEGORÍAS
+   ============================================================ */
+
+.saludo {
+  padding: 4px 2px 16px;
+}
+
+.saludo h1 {
+  font-size: 22px;
+  font-weight: 800;
+  margin-bottom: 3px;
+}
+
+.saludo p {
+  font-size: 14px;
+  color: var(--texto-suave);
+}
+
+/* Contenedor de categorías: grid de 2 columnas por defecto (forma
+   "circular" o "cuadrada"). La variante "columna" cambia a una sola
+   columna de ancho completo — ver #lista-categorias.columna abajo. */
+#lista-categorias {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+.categoria {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;   /* forma "circular", la de siempre */
+  overflow: hidden;
+  display: block;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  text-align: center;
+}
+
+/* Forma "cuadrada": mismo grid de 2 columnas, esquinas redondeadas
+   en vez de círculo. */
+#lista-categorias.cuadrada .categoria {
+  border-radius: 14px;
+}
+
+/* Forma "columna": una tarjeta ancha por fila en vez de grid — el
+   nombre queda alineado a la izquierda como una lista de menú. */
+#lista-categorias.columna {
+  grid-template-columns: 1fr;
+}
+#lista-categorias.columna .categoria {
+  aspect-ratio: auto;
+  height: 84px;
+  border-radius: 14px;
+}
+#lista-categorias.columna .categoria-nombre {
+  justify-content: flex-start;
+  padding-left: 20px;
+  text-align: left;
+}
+
+.categoria-nombre {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  color: var(--blanco);
+  font-size: 20px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+  padding: 0 14%;
+  text-align: center;
+}
+
+.boton-contacto-negocio {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  margin-top: 18px;
+  padding: 14px;
+  background: var(--whatsapp);
+  color: var(--blanco);
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+}
+
+.boton-contacto-negocio:active { opacity: 0.85; }
+
+.tarjeta-promo {
+  margin-top: 18px;
+  padding: 18px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, var(--negro), var(--acento-oscuro));
+  color: var(--blanco);
+  text-align: center;
+}
+
+.tarjeta-promo-etiqueta {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--dorado);
+  background: rgba(212, 162, 76, 0.18);
+  padding: 4px 10px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+}
+
+.tarjeta-promo-titulo {
+  font-size: 18px;
+  font-weight: 800;
+  margin-bottom: 4px;
+}
+
+.tarjeta-promo-precio {
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--dorado);
+}
+
+.tarjeta-promo-precio span {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--blanco);
+  opacity: 0.8;
+}
+
+.categoria:active { transform: scale(0.985); }
+
+
+/* ============================================================
+   PANTALLA 2 - LISTADO DE PRODUCTOS
+   ============================================================ */
+
+.contador-productos {
+  font-size: 14px;
+  color: var(--texto-suave);
+  padding: 2px 2px 12px;
+}
+
+/* Grid de 2 columnas por defecto (forma "grid-cuadrado" o
+   "grid-circular"). La variante "columna" pasa a una sola columna
+   de ancho completo — ver #lista-productos.columna abajo. */
+#lista-productos {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+#lista-productos.columna {
+  grid-template-columns: 1fr;
+}
+
+.producto-fila {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: var(--blanco);
+  border-radius: 14px;
+  padding: 10px;
+  width: 100%;
+  text-align: left;
+  border: 1px solid var(--borde);
+}
+
+.producto-fila:active { background: #fafbfc; }
+
+.producto-miniatura {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 9px;   /* forma "grid-cuadrado", la de siempre */
+  object-fit: cover;
+  background: var(--gris-fondo);
+  flex-shrink: 0;
+}
+
+/* Forma "grid-circular": misma tarjeta, miniatura redonda. */
+#lista-productos.grid-circular .producto-miniatura {
+  border-radius: 50%;
+}
+
+/* Forma "columna": la misma tarjeta (imagen grande cuadrada arriba,
+   datos en texto abajo) pero ocupando todo el ancho en vez de la
+   mitad del grid. */
+#lista-productos.columna .producto-fila {
+  flex-direction: column;
+}
+#lista-productos.columna .producto-miniatura {
+  aspect-ratio: 16 / 10;
+}
+
+.producto-datos { min-width: 0; }
+
+.producto-nombre {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 3px;
+}
+
+.producto-unidad {
+  font-size: 13px;
+  color: var(--texto-suave);
+  font-weight: 400;
+}
+
+.producto-precio {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--dorado);
+}
+
+.etiqueta-oferta {
+  display: inline-block;
+  background: var(--rojo);
+  color: var(--blanco);
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border-radius: 4px;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+.etiqueta-agotado {
+  display: inline-block;
+  background: var(--texto-suave);
+  color: var(--blanco);
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border-radius: 4px;
+  margin-left: 6px;
+}
+
+.producto-fila.agotado { opacity: 0.55; }
+
+
+/* ============================================================
+   PANTALLA 3 - DETALLE DEL PRODUCTO
+   ============================================================ */
+
+.detalle-imagen {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 14px;
+  background: var(--blanco);
+  margin-bottom: 16px;
+}
+
+.detalle-nombre {
+  font-size: 24px;
+  font-weight: 800;
+  margin-bottom: 4px;
+}
+
+.detalle-precio {
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--dorado);
+  margin-bottom: 2px;
+}
+
+.detalle-unidad {
+  font-size: 14px;
+  color: var(--texto-suave);
+  margin-bottom: 20px;
+}
+
+.detalle-descripcion {
+  font-size: 14.5px;
+  line-height: 1.5;
+  color: var(--texto);
+  white-space: pre-line;
+  margin-top: -8px;
+  margin-bottom: 20px;
+}
+
+.bloque {
+  background: var(--blanco);
+  border: 1px solid var(--borde);
+  border-radius: 12px;
+  padding: 14px;
+  margin-bottom: 14px;
+}
+
+.bloque-titulo {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 9px;
+}
+
+.observaciones {
+  width: 100%;
+  min-height: 74px;
+  border: 1px solid var(--borde);
+  border-radius: 9px;
+  padding: 10px;
+  font-size: 15px;
+  resize: vertical;
+  color: var(--texto);
+}
+
+.observaciones:focus {
+  outline: none;
+  border-color: var(--acento);
+}
+
+.contador-caracteres {
+  text-align: right;
+  font-size: 12px;
+  color: var(--texto-suave);
+  margin-top: 5px;
+}
+
+
+/* ---------- Selector de cantidad ---------- */
+
+.selector {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.selector-boton {
+  width: 46px; height: 46px;
+  border-radius: 50%;
+  background: var(--gris-fondo);
+  border: 1px solid var(--borde);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--texto);
+  display: grid;
+  place-items: center;
+  line-height: 1;
+}
+
+.selector-boton:active { background: var(--borde); }
+.selector-boton:disabled { opacity: 0.35; }
+
+.selector-valor {
+  font-size: 24px;
+  font-weight: 800;
+  min-width: 90px;
+  text-align: center;
+}
+
+.selector-valor small {
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--texto-suave);
+}
+
+
+/* ============================================================
+   PANTALLA 4 - CARRITO
+   ============================================================ */
+
+.carrito-acciones {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 14px;
+}
+
+.carrito-linea {
+  background: var(--blanco);
+  border: 1px solid var(--borde);
+  border-radius: 12px;
+  padding: 13px;
+  margin-bottom: 11px;
+}
+
+.carrito-linea-arriba {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.carrito-linea-nombre {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.carrito-linea-obs {
+  font-size: 13px;
+  color: var(--texto-suave);
+  font-style: italic;
+  margin-top: 3px;
+}
+
+.carrito-linea-subtotal {
+  font-size: 17px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.carrito-linea-abajo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.selector-chico { gap: 12px; }
+.selector-chico .selector-boton { width: 34px; height: 34px; font-size: 19px; }
+.selector-chico .selector-valor { font-size: 16px; min-width: 66px; }
+.selector-chico .selector-valor small { font-size: 11px; }
+
+.quitar {
+  color: var(--rojo);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px;
+}
+
+
+/* ---------- Formulario ---------- */
+
+.campo { margin-bottom: 14px; }
+
+.campo label {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.campo label .obligatorio { color: var(--rojo); }
+
+.campo input,
+.campo textarea {
+  width: 100%;
+  padding: 11px 12px;
+  border: 1px solid var(--borde);
+  border-radius: 9px;
+  font-size: 15px;
+  color: var(--texto);
+}
+
+.campo textarea {
+  resize: vertical;
+  min-height: 70px;
+}
+
+.campo input:focus,
+.campo textarea:focus {
+  outline: none;
+  border-color: var(--acento);
+}
+
+.campo input.error { border-color: var(--rojo); }
+
+/* Botón de mostrar/ocultar contraseña, superpuesto dentro del input
+   (login y registro). El padding-right del input le deja lugar para
+   no quedar tapado por el texto escrito. */
+.campo-password {
+  position: relative;
+}
+
+.campo-password input {
+  padding-right: 42px;
+}
+
+.btn-mostrar-password {
+  position: absolute;
+  top: 50%;
+  right: 4px;
+  transform: translateY(-50%);
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  background: none;
+  border: none;
+  font-size: 17px;
+  opacity: 0.55;
+  cursor: pointer;
+}
+
+.btn-mostrar-password:active { opacity: 0.85; }
+
+.opciones { display: flex; gap: 10px; }
+
+.opcion {
+  flex: 1;
+  padding: 13px 8px;
+  border: 2px solid var(--borde);
+  border-radius: 999px;
+  background: var(--blanco);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--texto);
+  text-align: center;
+  line-height: 1.25;
+}
+
+.opcion.elegida {
+  border-color: var(--acento);
+  background: #eaf1ec;
+  color: var(--acento-oscuro);
+}
+
+.oculto { display: none !important; }
+
+
+/* ---------- Resumen y botón final ---------- */
+
+.resumen {
+  background: var(--blanco);
+  border: 1px solid var(--borde);
+  border-radius: 12px;
+  padding: 14px;
+  margin-bottom: 14px;
+}
+
+.resumen-fila {
+  display: flex;
+  justify-content: space-between;
+  font-size: 15px;
+  padding: 3px 0;
+  color: var(--texto-suave);
+}
+
+.resumen-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--texto);
+  border-top: 1px solid var(--borde);
+  margin-top: 9px;
+  padding-top: 9px;
+}
+
+.boton-whatsapp {
+  width: 100%;
+  padding: 16px;
+  background: var(--whatsapp);
+  color: #ffffff;
+  border-radius: 999px;
+  font-size: 17px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+}
+
+.boton-whatsapp:active { background: #3d9257; }
+.boton-whatsapp:disabled { background: #cfd5dc; color: #8b939d; }
+
+.aviso {
+  background: #fff8e6;
+  border-left: 4px solid var(--amarillo);
+  border-radius: 8px;
+  padding: 11px 13px;
+  font-size: 13.5px;
+  margin-bottom: 14px;
+}
+
+.aviso.error {
+  background: #fdeceb;
+  border-left-color: var(--rojo);
+}
+
+
+/* ---------- Botón fijo de agregar (pantalla detalle) ---------- */
+
+.barra-accion {
+  position: sticky;
+  bottom: 0;
+  background: var(--gris-fondo);
+  padding: 12px 0 6px;
+  margin-top: 6px;
+}
+
+.boton-principal {
+  width: 100%;
+  padding: 16px;
+  background: var(--acento);
+  color: var(--blanco);
+  border-radius: 999px;
+  font-size: 16px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.boton-principal:active { background: var(--acento-oscuro); }
+.boton-principal:disabled { background: #cfd5dc; }
+
+
+/* ---------- Estado vacío ---------- */
+
+.vacio {
+  text-align: center;
+  padding: 60px 24px;
+  color: var(--texto-suave);
+}
+
+.vacio-icono { font-size: 46px; margin-bottom: 12px; }
+.vacio p { margin-bottom: 18px; font-size: 15px; }
+
+/* Marcador invisible al final del listado de productos: cuando entra
+   en pantalla (el cliente llegó ahí haciendo scroll), dispara la carga
+   del siguiente lote. No lleva contenido ni estilo visible a propósito. */
+.productos-centinela {
+  height: 1px;
+}
+
+.boton-secundario {
+  display: inline-block;
+  padding: 12px 22px;
+  background: var(--negro);
+  color: var(--blanco);
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+
+/* ---------- Aviso flotante al agregar ---------- */
+
+.confirmacion {
+  position: fixed;
+  left: 50%;
+  bottom: 26px;
+  transform: translateX(-50%) translateY(90px);
+  background: var(--negro);
+  color: var(--blanco);
+  padding: 12px 20px;
+  border-radius: 30px;
+  font-size: 14.5px;
+  font-weight: 600;
+  z-index: 200;
+  transition: transform 0.25s ease;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+  max-width: 90vw;
+  text-align: center;
+}
+
+.confirmacion.visible { transform: translateX(-50%) translateY(0); }
+
+
+/* ---------- Botón flotante de carrito ---------- */
+
+.carrito-flotante {
+  position: fixed;
+  right: 18px;
+  bottom: 104px; /* +14px respecto al valor original: el footer fijo ahora tiene 2 renglones y es más alto */
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--acento);
+  color: var(--blanco);
+  font-size: 26px;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+  z-index: 150;
+}
+
+.carrito-flotante:active { transform: scale(0.94); }
+
+.carrito-flotante-contador {
+  position: absolute;
+  top: -4px; right: -4px;
+  background: var(--rojo);
+  color: var(--blanco);
+  font-size: 11px;
+  font-weight: 700;
+  min-width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  padding: 0 5px;
+  border: 2px solid var(--blanco);
+}
+
+.carrito-flotante-contador.oculto { display: none; }
+
+/* Fijo abajo de la pantalla, siempre visible — antes vivía en flujo
+   normal al final del documento, solo se veía al llegar al final del
+   scroll. Con position: fixed sale del flujo, así que main necesita
+   padding-bottom extra (ver más abajo) para que el footer no tape el
+   final del contenido real. */
+footer {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  text-align: center;
+  font-size: 11px;
+  color: var(--texto-suave);
+  padding: 6px 14px;
+  background: var(--gris-fondo);
+  border-top: 1px solid var(--borde);
+  z-index: 140;
+}
+
+footer p { margin: 0; }
+
+/* Links legales en su propio renglón, más chicos y sutiles que el
+   crédito de arriba — mismo criterio que landing.html. */
+.footer-legal {
+  font-size: 10px;
+  opacity: 0.85;
+  margin-top: 2px;
+}
+
+.footer-logo-negocio {
+  max-height: 28px;
+  margin: 0 auto;
+}
+
+/* Botones de compartir: fijos en el margen izquierdo, acompañan el
+   scroll — simétricos al botón flotante del carrito, que ocupa el
+   margen derecho. Antes vivían dentro del footer (solo visibles al
+   llegar al final de la página). Achicados respecto al tamaño
+   original para no competir en espacio con el resto de la pantalla. */
+.compartir-flotante {
+  position: fixed;
+  left: 18px;
+  bottom: 104px; /* +14px respecto al valor original: el footer fijo ahora tiene 2 renglones y es más alto */
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 150;
+}
+
+.compartir-boton {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: var(--blanco);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  transition: transform 0.15s ease;
+}
+
+.compartir-boton:active {
+  transform: scale(0.92);
+}
+
+.compartir-boton svg {
+  width: 18px;
+  height: 18px;
+}
+
+.compartir-whatsapp  { background: var(--whatsapp); }
+.compartir-facebook  { background: #1877f2; }
+.compartir-messenger { background: #0084ff; }
+.compartir-instagram {
+  background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+}
+
+
+.boton-vaciar {
+  padding: 8px 16px;
+  background: var(--rojo);
+  color: var(--blanco);
+  border: none;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.boton-vaciar:hover {
+  background: #c41e3a;
+}
+
+.boton-vaciar:active {
+  background: #a01830;
+}
+
+
+/* ============================================================
+   ESCRITORIO (desde 900px)
+   ------------------------------------------------------------
+   Todo lo de arriba sigue aplicando: esto solo agranda el ancho
+   del catálogo y pasa el grid de categorías/productos de 2 a 4
+   columnas. Las variantes de forma (cuadrada/columna/circular,
+   elegidas por cada negocio desde el panel admin) se respetan
+   igual: "columna" sigue siendo 1 columna aun en escritorio.
+   ============================================================ */
+
+@media (min-width: 900px) {
+  :root {
+    --ancho-max: 1100px;
+  }
+
+  /* Desde acá, el fondo personalizado pasa a usar la imagen (y su
+     propia opacidad) de escritorio en vez de la de mobile (ver bloque
+     "Imagen de fondo opcional" más arriba). app.js ya se encarga de que
+     ambas variables tengan siempre un valor: si el negocio solo cargó
+     la de mobile, acá caen a esas mismas (misma imagen y misma
+     atenuación en todos los anchos). */
+  body.con-fondo-personalizado::before {
+    background-image: var(--imagen-fondo-desktop-personalizada);
+    opacity: var(--opacidad-fondo-desktop-personalizada, 0.5);
+  }
+
+  #lista-categorias {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  #lista-categorias.columna {
+    grid-template-columns: 1fr;
+  }
+
+  #lista-productos {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  #lista-productos.columna {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+
+/* ---------- Menú lateral (las 3 rayitas del catálogo) ---------- */
+
+.menu-fondo {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  background: rgba(0,0,0,0.5);
+}
+
+.menu-lateral {
+  position: fixed;
+  top: 0; right: 0; bottom: 0;
+  z-index: 301;
+  width: min(86vw, 400px);
+  box-sizing: border-box;
+  background: var(--blanco);
+  color: var(--texto);
+  overflow-y: auto;
+  transform: translateX(100%);
+  visibility: hidden;
+  transition: transform 0.25s ease, visibility 0s linear 0.25s;
+}
+
+.menu-lateral.abierto {
+  transform: translateX(0);
+  visibility: visible;
+  transition: transform 0.25s ease;
+}
+
+.menu-lateral-cabecera {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--borde);
+}
+
+.menu-lateral-titulo {
+  flex: 1;
+  font-size: 17px;
+  font-weight: 800;
+}
+
+.menu-lateral-cerrar,
+.menu-lateral-volver {
+  width: 36px; height: 36px;
+  border-radius: 999px;
+  font-size: 18px;
+  color: var(--texto);
+}
+
+.menu-lateral-lista { padding: 12px 8px; }
+
+.menu-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 12px;
+  border-radius: 14px;
+  text-align: left;
+  color: var(--texto);
+}
+
+.menu-item:active { background: rgba(0,0,0,0.05); }
+
+.menu-item-icono {
+  width: 46px; height: 46px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  border-radius: 50%;
+}
+
+.menu-item-icono-acento {
+  background: var(--acento);
+  color: var(--blanco);
+}
+
+.menu-item-textos {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.menu-item-titulo { font-size: 16px; font-weight: 700; }
+.menu-item-sub { font-size: 14px; font-weight: 400; color: var(--texto-suave); }
+.menu-item-flecha { font-size: 28px; line-height: 1; color: var(--texto-suave); }
+
+.menu-contacto { padding: 8px 20px 24px; }
+
+.menu-dato {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--borde);
+}
+
+.menu-dato-etiqueta { font-size: 13px; color: var(--texto-suave); }
+.menu-dato-valor { font-size: 16px; font-weight: 700; word-break: break-word; }
+.menu-dato-valor a { color: var(--acento); }
+.menu-dato-valor { white-space: pre-line; }
+
+
+/* ---------- Banner del negocio (detrás del saludo de la portada) ----------
+   De borde a borde de la pantalla y pegado a la barra superior, con un
+   degradé oscuro abajo para que el nombre se lea sobre cualquier foto.
+   Sin banner (sin la clase .con-banner) el saludo se ve como siempre.
+   El margen negativo anula el padding de .pantalla (14px) arriba y a los
+   lados; el ancho 100vw + margin-left calc(50% - 50vw) lo estira hasta
+   los bordes también cuando main es una columna centrada (escritorio).
+
+   Alto: 200px en celulares y crece con el ancho de pantalla hasta 380px;
+   con un alto fijo, en un monitor ancho el banner quedaba como una tira
+   finita y la foto se recortaba casi toda. Con estas medidas, una imagen
+   de 1920 x 720 px (la que recomienda Configuración → Banner) deja ver
+   siempre al menos la mitad central, tanto de ancho como de alto, desde
+   360px hasta 1920px de pantalla. Si se cambia este alto, actualizar la
+   guía de tamaño de admin.html. */
+.saludo.con-banner {
+  --alto-banner: clamp(200px, 20vw, 380px);
+  position: relative;
+  box-sizing: border-box;
+  width: 100vw;
+  margin: -14px 0 16px calc(50% - 50vw);
+  min-height: var(--alto-banner);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  /* El texto arranca alineado con el resto del contenido, que en
+     escritorio es una columna centrada (mismo cálculo que .menu-nav). */
+  padding: 18px max(14px, calc((100vw - var(--ancho-max)) / 2 + 14px));
+  overflow: hidden;
+  background-color: var(--acento);
+  background-size: cover;
+  background-position: center;
+  color: var(--blanco);
+}
+
+.saludo.con-banner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.25) 55%, rgba(0,0,0,0) 100%);
+}
+
+.saludo.con-banner h1,
+.saludo.con-banner p {
+  position: relative;
+  color: var(--blanco);
+  text-shadow: 0 1px 4px rgba(0,0,0,0.45);
+}
+
+/* Barra transparente sobre el banner (opción "Mostrar el banner también
+   detrás de la barra superior"): el banner sube hasta el borde de la
+   pantalla y la barra pierde solo su fondo. El degradé de arriba mantiene
+   legibles el logo, el nombre y los botones sobre cualquier foto. */
+.barra { transition: background-color 0.2s ease; }
+.barra.barra-transparente { background: transparent; }
+
+.saludo.con-banner.sobre-barra {
+  margin-top: calc(-14px - var(--alto-barra));
+  min-height: calc(var(--alto-banner) + var(--alto-barra));
+}
+
+.saludo.con-banner.sobre-barra::before {
+  background:
+    linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0) 110px),
+    linear-gradient(to top, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.25) 55%, rgba(0,0,0,0) 100%);
+}
+
+
+/* ============================================================
+   DISEÑO RESTAURANTE (negocios con tipo de tienda "restaurante")
+   ------------------------------------------------------------
+   Lo activa app.js con body.modo-restaurante (ver dibujarCategorias y
+   dibujarMenuRestaurante). Debajo del banner hay un nav de categorías
+   que queda fijo bajo la barra superior al scrollear, y debajo toda la
+   carta junta: título de cada categoría + tarjetas rectangulares con la
+   imagen cuadrada a la derecha. Los demás tipos de tienda no usan nada
+   de este bloque.
+   ============================================================ */
+
+:root { --alto-menu-nav: 54px; }
+
+/* El banner y el nav van de borde a borde con width: 100vw, que cuenta la
+   barra de desplazamiento de la ventana y haría sobresalir un poco la
+   página a la derecha: se recorta (el 2º valor pisa al 1º donde "clip"
+   existe; "hidden" es el respaldo para navegadores viejos). */
+body.con-ancho-completo {
+  overflow-x: hidden;
+  overflow-x: clip;
+}
+
+body.modo-restaurante #lista-categorias { display: none; }
+
+/* El nav queda pegado al banner, sin hueco en el medio. */
+body.modo-restaurante .saludo.con-banner { margin-bottom: 0; }
+
+/* Nav de categorías: ocupa todo el ancho de la pantalla (mismo recurso
+   que el banner) y se queda fijo justo debajo de la barra superior. */
+.menu-nav {
+  position: sticky;
+  top: var(--alto-barra);
+  z-index: 90;
+  box-sizing: border-box;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  height: var(--alto-menu-nav);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  /* El primer chip arranca alineado con las tarjetas, también en escritorio
+     donde el catálogo es una columna centrada. */
+  padding: 0 max(14px, calc((100vw - var(--ancho-max)) / 2 + 14px));
+  overflow-x: auto;
+  scrollbar-width: none;
+  background: var(--blanco);
+  border-bottom: 1px solid var(--borde);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.menu-nav::-webkit-scrollbar { display: none; }
+
+.menu-chip {
+  flex: 0 0 auto;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1.5px solid var(--borde);
+  background: var(--blanco);
+  color: var(--texto);
+  font-size: 14px;
+  font-weight: 700;
+  white-space: nowrap;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.menu-chip.activa {
+  background: var(--acento);
+  border-color: var(--acento);
+  color: var(--blanco);
+}
+
+.menu-seccion {
+  padding-top: 22px;
+  /* Al saltar a una categoría el título queda justo debajo del nav fijo. */
+  scroll-margin-top: calc(var(--alto-barra) + var(--alto-menu-nav) - 6px);
+}
+
+.menu-seccion-titulo {
+  font-size: 20px;
+  font-weight: 800;
+  margin-bottom: 12px;
+}
+
+.menu-tarjetas {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+.menu-tarjeta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  padding: 12px;
+  text-align: left;
+  background: var(--blanco);
+  border: 1px solid var(--borde);
+  border-radius: 16px;
+}
+
+.menu-tarjeta:active { background: #fafbfc; }
+
+.menu-tarjeta.agotado { opacity: 0.55; cursor: default; }
+
+.menu-tarjeta-datos {
+  flex: 1;
+  min-width: 0;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.menu-tarjeta-nombre {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+/* La etiqueta (Oferta / Sin stock) va antes del nombre: así, si el nombre
+   es largo y salta de renglón, no queda una etiqueta sola con sangría. */
+.menu-tarjeta-nombre .etiqueta-oferta,
+.menu-tarjeta-nombre .etiqueta-agotado {
+  margin: 0 6px 0 0;
+}
+
+.menu-tarjeta-descripcion {
+  font-size: 13.5px;
+  color: var(--texto-suave);
+  /* Máximo 2 renglones: la tarjeta mantiene un alto parejo. */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.menu-tarjeta-precio {
+  margin-top: auto;
+  padding-top: 4px;
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--dorado);
+}
+
+.menu-tarjeta-imagen {
+  flex: 0 0 96px;
+  width: 96px;
+  height: 96px;
+  border-radius: 12px;
+  object-fit: cover;
+  background: var(--gris-fondo);
+}
+
+@media (min-width: 900px) {
+  /* En escritorio la carta pasa a 2 columnas de tarjetas. */
+  .menu-tarjetas { grid-template-columns: repeat(2, 1fr); }
+
+  .menu-tarjeta-imagen {
+    flex-basis: 112px;
+    width: 112px;
+    height: 112px;
+  }
+}

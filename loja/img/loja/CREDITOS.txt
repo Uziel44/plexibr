@@ -1,0 +1,24 @@
+Fotos de la demostración de la tienda de ropa (simulacion.html)
+==============================================================
+Fuente: Pexels (https://www.pexels.com). Se usan según la licencia de Pexels
+(https://www.pexels.com/license/): uso libre, incluso comercial; la atribución
+no es obligatoria, pero se listan los autores igual.
+Se recortaron y comprimieron (640x640; el banner, 1600x640) sin alterar su contenido.
+
+archivo | título | autor | página
+vestido-floral.jpg | Elegant Floral Dress on Wooden Hanger | Taylor Thompson | https://www.pexels.com/photo/36213224/
+blusa-bufante.jpg | Yellow Retro-style Blouse Hanging Above the Dresser | Eugenia Remark | https://www.pexels.com/photo/23495731/
+vestido-midi.jpg | Elegant Vintage Floral Dress Hanging in Closet | Lisa Fotios | https://www.pexels.com/photo/31683080/
+camiseta-basica.jpg | Minimalist Fashion Flat Lay of White T-Shirt | Daniel & Hannah Snipes | https://www.pexels.com/photo/37704838/
+camisa-linho.jpg | Shirt on Hanger on Branch | dayong tien | https://www.pexels.com/photo/22441297/
+calca-jeans.jpg | Blue Denim Jeans with Pockets | Castorly Stock | https://www.pexels.com/photo/4109759/
+tenis-branco.jpg | Shoes on Display | Hurrah suhail | https://www.pexels.com/photo/11324518/
+sandalia-couro.jpg | Studio Shot of Three Leather Sandals in Various Colors | José Martin Segura Benites | https://www.pexels.com/photo/26965818/
+bota-couro.jpg | Leather Boots with High Heels | José Martin Segura Benites | https://www.pexels.com/photo/27256457/
+bolsa-couro.jpg | Bag on Yellow Background | José Martin Segura Benites | https://www.pexels.com/photo/27174573/
+oculos-de-sol.jpg | Sunglasses on White Background | GlassesShop GS | https://www.pexels.com/photo/27353350/
+cinto-couro.jpg | Colorful Leather Belts on Dark Background | Shivam Patil | https://www.pexels.com/photo/31959214/
+jaqueta-jeans.jpg | Blue Denim Jacket Hanging on the Wall | Arturo A | https://www.pexels.com/photo/13662420/
+sueter-trico.jpg | Gray and Black Striped Crew-neck Top | Dom J | https://www.pexels.com/photo/45982/
+casaco-teddy.jpg | Coat Hanging on Hangers | Margarita | https://www.pexels.com/photo/16008693/
+banner.jpg | Green Plant Inside a Store  | Ron Lach | https://www.pexels.com/photo/8386651/
