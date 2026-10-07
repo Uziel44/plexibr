@@ -1,0 +1,381 @@
+/* ============================================================
+   LANDING (plexi.com.ar) - ESTILOS
+   ------------------------------------------------------------
+   Reusa las variables y componentes de style.css (paleta,
+   barra superior, .boton-contacto-negocio, .tarjeta-promo).
+   Acá solo van las secciones propias de esta página.
+   ============================================================ */
+
+.landing-body { background: var(--gris-fondo); }
+
+.landing-main {
+  padding-bottom: 20px;
+}
+
+.landing-hero {
+  padding: 40px 20px 28px;
+  text-align: center;
+}
+
+.landing-etiqueta {
+  display: inline-block;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--acento-oscuro);
+  background: rgba(31, 74, 56, 0.1);
+  padding: 5px 12px;
+  border-radius: 20px;
+  margin-bottom: 14px;
+}
+
+.landing-hero h1 {
+  font-size: 26px;
+  font-weight: 800;
+  line-height: 1.25;
+  margin-bottom: 12px;
+}
+
+.landing-hero-sub {
+  font-size: 15px;
+  color: var(--texto-suave);
+  max-width: 440px;
+  margin: 0 auto 22px;
+}
+
+.landing-hero .boton-contacto-negocio {
+  max-width: 320px;
+  margin: 0 auto;
+}
+
+.landing-seccion {
+  padding: 28px 20px;
+  border-top: 1px solid var(--borde);
+}
+
+.landing-seccion h2 {
+  font-size: 20px;
+  font-weight: 800;
+  margin-bottom: 6px;
+  text-align: center;
+}
+
+.landing-seccion-sub {
+  font-size: 14px;
+  color: var(--texto-suave);
+  text-align: center;
+  margin-bottom: 18px;
+}
+
+/* Sección demo: texto + mockup de teléfono con el catálogo real
+   adentro en un iframe, mismo patrón que usa plexiweb.pages.dev
+   para mostrar Plexibr. */
+.landing-demo-seccion {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 28px;
+}
+
+.landing-demo-info { flex: 1; min-width: 240px; }
+
+.landing-seccion .landing-demo-titulo-h2 {
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+.landing-demo-desc {
+  font-size: 14px;
+  color: var(--texto-suave);
+  line-height: 1.6;
+}
+
+.landing-demo-acciones { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 10px; }
+
+.landing-seccion .landing-demo-acciones .boton-contacto-negocio {
+  width: auto;
+  display: inline-flex;
+  margin: 0;
+  padding: 12px 20px;
+}
+
+.landing-demo-mockup {
+  flex: 1;
+  min-width: 220px;
+  max-width: 280px;
+  aspect-ratio: 9 / 16;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 14px 34px rgba(0,0,0,0.15);
+  border: 1px solid var(--borde);
+  background: var(--blanco);
+  margin: 0 auto;
+}
+
+.landing-demo-mockup iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.landing-pasos {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.landing-paso {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  background: var(--blanco);
+  border: 1px solid var(--borde);
+  border-radius: 14px;
+  padding: 16px;
+}
+
+.landing-paso-numero {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--acento);
+  color: var(--blanco);
+  font-weight: 800;
+  font-size: 14px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.landing-paso p {
+  font-size: 14.5px;
+}
+
+.landing-tarjeta-precio {
+  max-width: 340px;
+  margin: 0 auto 18px;
+}
+
+.landing-seccion .boton-contacto-negocio {
+  max-width: 340px;
+  margin: 0 auto;
+}
+
+
+/* ---------- Planes (Gratis / Plan completo / Plan premium) ---------- */
+
+.landing-planes {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+/* Dentro de .landing-planes, cada tarjeta pierde el max-width/margin
+   propio de .landing-tarjeta-precio (pensado para una tarjeta sola,
+   centrada) — acá el ancho lo reparte el flex del contenedor. */
+.landing-planes .landing-tarjeta-precio {
+  max-width: none;
+  margin: 0;
+}
+
+/* 640px alcanzaba para 2 tarjetas, pero con 3 en fila se apretaban en
+   tablet — 860px es el primer punto donde las tres respiran sin
+   achicar demasiado el texto de landing-plan-detalle. */
+@media (min-width: 860px) {
+  .landing-planes {
+    flex-direction: row;
+  }
+  .landing-planes .landing-tarjeta-precio {
+    flex: 1;
+  }
+}
+
+/* Las tarjetas de plan gratis y completo son enlaces al registro: un <a>
+   es inline y subrayado por defecto, así que se lo deja como bloque y sin
+   subrayado para que se vea igual que la tarjeta premium (que es un div). */
+a.landing-tarjeta-precio {
+  display: block;
+  text-decoration: none;
+}
+
+a.landing-tarjeta-precio:active { opacity: 0.9; }
+
+.landing-plan-detalle {
+  font-size: 13.5px;
+  color: var(--blanco);
+  opacity: 0.85;
+  margin-top: 8px;
+}
+
+footer {
+  text-align: center;
+  font-size: 12px;
+  color: var(--texto-suave);
+  padding: 26px 14px 34px;
+}
+
+footer p { margin: 0; }
+
+/* Links legales en su propio escalón, separados del crédito de
+   arriba — antes iban todos seguidos en la misma línea. */
+.landing-footer-legal {
+  margin-top: 8px;
+  font-size: 11px;
+  opacity: 0.85;
+}
+
+
+/* ============================================================
+   GESTOS (animaciones e interacciones) - solo landing.html
+   ------------------------------------------------------------
+   Lo que oculta contenido cuelga de html.landing-js (la pone el
+   <head> de landing.html): sin esa clase todo queda a la vista.
+   terminos.html y privacidad.html comparten este archivo pero no
+   tienen la clase ni los data-reveal. El JS: js/landing.js.
+   ============================================================ */
+
+.landing-body { --landing-ease: cubic-bezier(0.22, 1, 0.36, 1); }
+
+/* Oculto hasta que landing.js le pone .revelado. Es una animación y no una
+   transición: al terminar el elemento vuelve a sus estilos normales y no pisa
+   su :hover ni su :active. */
+.landing-js [data-reveal]:not(.revelado),
+.landing-js [data-hero-item]:not(.revelado) {
+  opacity: 0;
+}
+
+.landing-js [data-reveal].revelado {
+  animation: landing-subir 0.8s var(--landing-ease) var(--retardo, 0s) backwards;
+}
+.landing-js [data-reveal="scale"].revelado { animation-name: landing-escala; }
+
+.landing-js [data-hero-item].revelado {
+  animation: landing-subir 0.9s var(--landing-ease) var(--retardo, 0s) backwards;
+}
+
+@keyframes landing-subir {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes landing-escala {
+  from { opacity: 0; transform: scale(0.94); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* Barra de progreso de lectura, sobre el borde superior de la barra. */
+.landing-progreso {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--dorado);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  z-index: 101;
+  pointer-events: none;
+}
+
+/* La barra superior gana sombra apenas se sale del tope. */
+.landing-animada .barra { transition: box-shadow 0.3s ease; }
+.landing-animada .barra[data-scrolled="true"] { box-shadow: 0 2px 16px rgba(0, 0, 0, 0.28); }
+
+/* Lugar abajo para el footer fijo (~102px) y el botón de WhatsApp (58px) que
+   flota encima: así al llegar al final ninguno tapa el último bloque. */
+.landing-animada .landing-main { padding-bottom: 160px; }
+
+/* Solo las tarjetas que son <a>: levantar la del plan premium (un div)
+   sugeriría que se puede tocar. */
+@media (hover: hover) {
+  .landing-animada a.landing-tarjeta-precio,
+  .landing-animada .boton-contacto-negocio {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .landing-animada a.landing-tarjeta-precio:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 28px rgba(18, 39, 29, 0.28);
+  }
+  .landing-animada .boton-contacto-negocio:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(18, 39, 29, 0.25);
+  }
+}
+
+/* ---------- Botón flotante de WhatsApp ---------- */
+.whatsapp-fab {
+  position: fixed;
+  right: 18px;
+  bottom: 116px; /* flota sobre el footer fijo de la landing (~102px) */
+  z-index: 150;  /* el footer fijo tiene 140 */
+  width: 58px;
+  height: 58px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--whatsapp);
+  color: var(--blanco);
+  box-shadow: 0 6px 18px rgba(18, 39, 29, 0.35);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  animation: landing-fab-entrada 0.5s var(--landing-ease) 1s backwards;
+}
+
+/* Halo que late. */
+.whatsapp-fab::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--whatsapp);
+  z-index: -1;
+  animation: landing-fab-pulso 2.6s ease-out infinite;
+}
+
+.whatsapp-fab svg {
+  position: relative;
+  width: 30px;
+  height: 30px;
+}
+
+.whatsapp-fab:focus-visible {
+  outline: 3px solid var(--dorado);
+  outline-offset: 3px;
+}
+
+@media (hover: hover) {
+  .whatsapp-fab:hover {
+    transform: scale(1.08);
+    box-shadow: 0 10px 26px rgba(79, 174, 109, 0.55);
+  }
+}
+
+@keyframes landing-fab-entrada {
+  from { opacity: 0; transform: scale(0.5); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes landing-fab-pulso {
+  0%        { transform: scale(1); opacity: 0.5; }
+  70%, 100% { transform: scale(1.7); opacity: 0; }
+}
+
+/* Movimiento reducido: todo visible de entrada, sin animar ni levantar. */
+@media (prefers-reduced-motion: reduce) {
+  .landing-js [data-reveal]:not(.revelado),
+  .landing-js [data-hero-item]:not(.revelado) {
+    opacity: 1;
+  }
+  .landing-js [data-reveal].revelado,
+  .landing-js [data-hero-item].revelado,
+  .whatsapp-fab,
+  .whatsapp-fab::before {
+    animation: none;
+  }
+}
+@media (hover: hover) and (prefers-reduced-motion: reduce) {
+  .landing-animada a.landing-tarjeta-precio:hover,
+  .landing-animada .boton-contacto-negocio:hover,
+  .whatsapp-fab:hover {
+    transform: none;
+  }
+}

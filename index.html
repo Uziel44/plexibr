@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <meta name="theme-color" content="#1f4a38">
+
+  <title>Plexi Pedidos | Seu catálogo online, pedidos pelo WhatsApp</title>
+  <meta name="description" content="Catálogo online para o seu negócio: seus clientes montam o pedido e enviam direto para o seu WhatsApp. Sem apps, sem comissão por venda.">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Plexi Pedidos | Seu catálogo online, pedidos pelo WhatsApp">
+  <meta property="og:description" content="Catálogo online para o seu negócio: seus clientes montam o pedido e enviam direto para o seu WhatsApp.">
+  <meta property="og:image" content="img/logo.jpg">
+  <meta name="twitter:card" content="summary">
+
+  <link rel="icon" href="img/logo.jpg">
+  <link rel="apple-touch-icon" href="img/logo.jpg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/landing.css">
+
+  <script>
+    // Los efectos ocultan contenido solo con esta clase puesta. Va acá para evitar el
+    // parpadeo al cargar; si landing.js no corre, a los 4 s se quita y todo se ve.
+    document.documentElement.classList.add('landing-js');
+    setTimeout(function () {
+      if (!document.documentElement.dataset.landing) document.documentElement.classList.remove('landing-js');
+    }, 4000);
+  </script>
+</head>
+<body class="landing-body landing-animada">
+
+  <a class="skip-link" href="#contenido-principal">Pular para o conteúdo principal</a>
+
+  <div class="landing-progreso" data-scroll-progress aria-hidden="true"></div>
+
+  <!-- ==========================================================
+       BARRA SUPERIOR — misma estructura visual que el catálogo,
+       pero el logo no lleva a ningún negocio puntual.
+       ========================================================== -->
+  <header class="barra">
+    <a class="barra-titulo-link" href="./">
+      <img class="barra-logo" src="img/logo.jpg" alt="Plexi Pedidos">
+      <span class="barra-titulo">Plexi Pedidos</span>
+    </a>
+    <div class="barra-acciones">
+      <a class="barra-boton barra-usuario" data-click="empezar_barra" href="https://wa.me/5493517732496?text=Ol%C3%A1%2C%20quero%20meu%20cat%C3%A1logo%20online" target="_blank" rel="noopener">Começar</a>
+    </div>
+  </header>
+
+  <main id="contenido-principal" class="landing-main">
+
+    <!-- ====================== HERO ====================== -->
+    <section class="landing-hero">
+      <span class="landing-etiqueta" data-hero-item>Catálogo online + pedidos pelo WhatsApp</span>
+      <h1 data-hero-item>Venda pelo WhatsApp, sem perder pedidos no chat</h1>
+      <p class="landing-hero-sub" data-hero-item>
+        Seus clientes escolhem os produtos em um catálogo como este, montam o
+        pedido e enviam para você já pronto, só para confirmar. Sem apps para
+        instalar, sem comissão por venda.
+      </p>
+      <a class="boton-contacto-negocio" data-hero-item data-click="quiero_mi_catalogo" href="https://wa.me/5493517732496?text=Ol%C3%A1%2C%20quero%20meu%20cat%C3%A1logo%20online" target="_blank" rel="noopener">Quero meu catálogo</a>
+    </section>
+
+    <!-- ====================== DEMO ====================== -->
+    <section class="landing-seccion landing-demo-seccion">
+      <div class="landing-demo-info" data-reveal>
+        <h2 class="landing-demo-titulo-h2">Assim o seu cliente vê</h2>
+        <p class="landing-demo-desc">Um catálogo real, funcionando agora mesmo: seus clientes escolhem os produtos, montam o pedido e enviam direto para o seu WhatsApp.</p>
+        <div class="landing-demo-acciones">
+          <a href="https://uziel44.github.io/plexi/" target="_blank" rel="noopener" class="boton-contacto-negocio" data-click="ver_demo_restaurante">Ver demo de restaurante</a>
+          <a href="https://uziel44.github.io/plexiloja/" target="_blank" rel="noopener" class="boton-contacto-negocio" data-click="ver_demo_loja">Ver demo de loja de roupas</a>
+        </div>
+      </div>
+      <div class="landing-demo-mockup" data-reveal="scale">
+        <iframe src="https://uziel44.github.io/plexi/" title="Demonstração do catálogo" loading="lazy"></iframe>
+      </div>
+    </section>
+
+    <!-- ====================== CÓMO FUNCIONA ====================== -->
+    <section class="landing-seccion">
+      <h2 data-reveal>Como funciona</h2>
+      <div class="landing-pasos">
+        <div class="landing-paso" data-reveal>
+          <span class="landing-paso-numero">1</span>
+          <p><strong>Você cadastra seu catálogo.</strong> Categorias, produtos, preços e fotos, direto do seu painel de administração.</p>
+        </div>
+        <div class="landing-paso" data-reveal>
+          <span class="landing-paso-numero">2</span>
+          <p><strong>Você compartilha seu link.</strong> Seu negócio tem seu próprio endereço na web para compartilhar onde quiser.</p>
+        </div>
+        <div class="landing-paso" data-reveal>
+          <span class="landing-paso-numero">3</span>
+          <p><strong>Você recebe o pedido pronto.</strong> O cliente confirma e o pedido chega no seu WhatsApp, pronto para combinar entrega e pagamento.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================== PLANES ====================== -->
+    <section class="landing-seccion">
+      <h2 data-reveal>Comece grátis, cresça quando precisar</h2>
+      <div class="landing-planes" data-metrica="planes">
+        <a class="tarjeta-promo landing-tarjeta-precio" data-reveal data-click="plan_gratis" href="https://wa.me/5493517732496?text=Ol%C3%A1%2C%20quero%20meu%20cat%C3%A1logo%20online" target="_blank" rel="noopener">
+          <p class="tarjeta-promo-titulo">Plano grátis</p>
+          <p class="tarjeta-promo-precio">R$ 0</p>
+          <p class="landing-plan-detalle">Até 5 categorias e 5 produtos. Monte seu catálogo hoje mesmo.</p>
+        </a>
+        <a class="tarjeta-promo landing-tarjeta-precio" data-reveal data-click="plan_completo" href="https://wa.me/5493517732496?text=Ol%C3%A1%2C%20quero%20meu%20cat%C3%A1logo%20online" target="_blank" rel="noopener">
+          <span class="tarjeta-promo-etiqueta">Para o seu negócio de verdade</span>
+          <p class="tarjeta-promo-titulo">Plano completo</p>
+          <p class="tarjeta-promo-precio">R$ 100 <span>por mês</span></p>
+          <p class="landing-plan-detalle">Adicione todos os seus produtos e categorias, sem limite, com pacote de aparência completo e suporte prioritário.</p>
+        </a>
+        <div class="tarjeta-promo landing-tarjeta-precio" data-reveal>
+          <span class="tarjeta-promo-etiqueta">Para crescer com dados</span>
+          <p class="tarjeta-promo-titulo">Plano premium</p>
+          <p class="tarjeta-promo-precio">R$ 150 <span>por mês</span></p>
+          <p class="landing-plan-detalle">Plano PREMIUM, com acesso ao pacote completo de métricas do seu catálogo e guia de estratégia de vendas.</p>
+        </div>
+      </div>
+      <a class="boton-contacto-negocio" data-reveal data-click="adherir_comercio" href="https://wa.me/5493517732496?text=Quero%20cadastrar%20meu%20com%C3%A9rcio%20e%20falar%20com%20um%20representante%20do%20meu%20estado" target="_blank" rel="noopener">Cadastre seu comércio: fale com um representante</a>
+    </section>
+
+    <footer>
+      <p class="landing-footer-credito">Plexi Pedidos &middot; Desenvolvido por <a href="https://web.plexi.com.ar" target="_blank" rel="noopener">Plexi Web</a></p>
+    </footer>
+
+  </main>
+
+  <!-- Botón flotante de WhatsApp: mismo destino que el botón del hero. -->
+  <a class="whatsapp-fab" data-click="whatsapp_flotante" href="https://wa.me/5493517732496?text=Ol%C3%A1%2C%20quero%20meu%20cat%C3%A1logo%20online" target="_blank" rel="noopener" aria-label="Fale conosco pelo WhatsApp">
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884a9.82 9.82 0 0 1 6.988 2.896 9.83 9.83 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.82 11.82 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.88 11.88 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.82 11.82 0 0 0 20.465 3.49"/>
+    </svg>
+  </a>
+
+  <script src="js/landing.js"></script>
+</body>
+</html>
